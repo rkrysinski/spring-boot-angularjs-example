@@ -11,11 +11,11 @@ public class Item {
 		this.count = count;
 	}
 
-	public String getItem() {
+	public String getName() {
 		return name;
 	}
 
-	public void setItem(String item) {
+	public void setName(String item) {
 		this.name = item;
 	}
 
@@ -72,7 +72,7 @@ public class Item {
 		String name;
 		int count;
 
-		public Builder withItemName(String name) {
+		public Builder withName(String name) {
 			this.name = name;
 			return this;
 		}

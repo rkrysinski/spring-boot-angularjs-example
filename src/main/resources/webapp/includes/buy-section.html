@@ -1,0 +1,47 @@
+
+<form name="buyForm" ng-submit="buyForm.$valid && buy(items)" novalidate>
+
+<div style="display: table;">
+
+	<div style="margin-top: 40px;">
+		<h4>Your shopping:</h4>
+	</div>
+
+	<div style="display: table-row">
+	
+		<div style="display: table-cell">
+		
+			<table style="margin-left: 20px;">
+				<tr ng-repeat="item in items" ng-form="repeatForm">
+					<td class="padding-bottom-normal"><label>{{item.name}}:</label></td>
+					<td class="padding-bottom-normal">
+						<input type="number"
+							   ng-model="item.toBuy"
+							   name="count"
+							   min="1" max="{{item.count}}" 
+							   required/>
+					    <br/>
+					    <div style="position:absolute">
+							<small class="error" ng-show="repeatForm.count.$error.number">
+								The value is not a valid integer!
+							</small>
+						    <small class="error" ng-show="repeatForm.count.$error.min || repeatForm.count.$error.max">
+	      						The value must be in range 1 to {{item.count}}!
+	      					</small>
+						    <small class="error" ng-show="repeatForm.count.$dirty && repeatForm.count.$error.required">
+	      						Please provide number of items to buy.
+	      					</small>
+      					</div>
+					</td>
+				</tr>
+			</table>
+			
+		</div>
+
+		<div style="display: table-cell; vertical-align: bottom; padding-left: 20px">
+			<input type="submit" style="margin-bottom: 22px;" value="Buy"/>
+		</div>
+		
+	</div>
+</div>
+</form>
