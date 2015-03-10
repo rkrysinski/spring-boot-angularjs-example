@@ -33,7 +33,7 @@ public class ItemController {
 		List<Item> items = new ArrayList<>();
 		items.add(new Item.Builder().withName("Item A").withCount(20).build());
 		items.add(new Item.Builder().withName("Item B").withCount(10).build());
-		items.add(new Item.Builder().withName("Item C").withCount(5).build());
+		items.add(new Item.Builder().withName("Item C").withCount(50).build());
 
 		return new ResponseEntity<>(items, HttpStatus.OK);
 	}

@@ -2,7 +2,17 @@ package org.qdeve.example.angularjs.data;
 
 import java.util.Locale;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Item {
+	
+	@Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private long id;
 	private String name;
 	private int count;
 
@@ -64,7 +74,8 @@ public class Item {
 
 	@Override
 	public String toString() {
-		return String.format(Locale.ENGLISH, "Item [itemName=%s, count=%d]",
+		return String.format(Locale.ENGLISH, 
+				"Item [itemName=%s, count=%d]",
 				name, count);
 	}
 
