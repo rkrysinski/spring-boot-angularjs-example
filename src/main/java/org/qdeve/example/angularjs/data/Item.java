@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Version;
 
 @Entity
 public class Item {
@@ -15,7 +16,11 @@ public class Item {
     private long id;
 	private String name;
 	private int count;
+	@Version
+    private Integer version;
 
+	public Item() {}
+	
 	public Item(String name, int count) {
 		this.name = name;
 		this.count = count;

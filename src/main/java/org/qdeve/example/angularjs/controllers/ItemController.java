@@ -1,11 +1,12 @@
 package org.qdeve.example.angularjs.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.qdeve.example.angularjs.data.Item;
+import org.qdeve.example.angularjs.repo.ItemManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,22 +20,23 @@ public class ItemController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ItemController.class);
 	public static final String REQUEST_MAPPING = "/item";
+	
+	@Autowired
+	private ItemManager itemMgr;
 
 	@RequestMapping(method = RequestMethod.PUT)
 	ResponseEntity<Void> update(@RequestBody List<Item> items) {
+		
 		LOG.debug("\n\n\n\n\n\nReceived: " + items);
+		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	ResponseEntity<List<Item>> getAll() {
-		LOG.debug("getAll entered");
 
-		List<Item> items = new ArrayList<>();
-		items.add(new Item.Builder().withName("Item A").withCount(20).build());
-		items.add(new Item.Builder().withName("Item B").withCount(10).build());
-		items.add(new Item.Builder().withName("Item C").withCount(50).build());
-
+		List<Item> items = itemMgr.getAll();
+		
 		return new ResponseEntity<>(items, HttpStatus.OK);
 	}
 }
