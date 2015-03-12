@@ -1,11 +1,22 @@
 
-<div style="margin-top: 20px;">
+<div class="margin-top-normal">
 	<h4>Currently available in our shop:</h4>
 </div>
-<table style="margin-left: 20px; margin-top: 20px;">
-	<tr ng-repeat="item in items">
-		<td><label>{{item.name}}:</label></td>
-		<td>{{item.count}}</td>
-		<td><label>left</label></td>
-	</tr>
-</table>
+
+<div class="div-table">
+	<div class="div-table-row" ng-repeat="item in items">
+	
+		<div class="div-table-col">
+			<label>{{item.name}}:</label>
+			
+		</div>
+		<div class="div-table-col div-table-col-fixed-width">
+			<label>{{item.count}}</label>
+ 		</div>		
+ 		
+		<div class="div-table-col">
+			<label>left</label>
+ 		</div>		
+ 		
+	</div>
+</div>

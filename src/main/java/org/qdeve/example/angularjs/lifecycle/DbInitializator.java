@@ -31,6 +31,7 @@ public class DbInitializator extends LifecycleBase {
 			items.add(new Item.Builder().withName("Item A").withCount(20).build());
 			items.add(new Item.Builder().withName("Item B").withCount(10).build());
 			items.add(new Item.Builder().withName("Item C").withCount(50).build());
+			itemDAO.deleteAll();
 			itemDAO.save(items);
 			LOG.debug("Initialization completed.");
 		} else {

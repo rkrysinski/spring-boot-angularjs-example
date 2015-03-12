@@ -10,18 +10,54 @@
 	border-color: #FA787E;
 }
 
-.ng-valid.ng-dirty {
+.ng-valid.ng-dirty.ng-touched {
 	border-color: #87FA89;
 }
 
 .error {
 	color: red;
 }
+.success {
+	color: #008000;
+}
 
 .padding-bottom-normal {
 	padding-bottom: 20px;
 }
 
+.margin-top-normal {
+	margin-top: 20px;
+}
+.margin-top-xl {
+	margin-top: 40px;
+}
+.margin-left-xl {
+	margin-left: 40px;
+}
+
 input {
 	width: 50px;
+}
+
+.div-table {
+	display: table;
+	margin-left: 20px;
+	width: auto;
+}
+
+.div-table-row {
+	display: table-row;
+	width: auto;
+	clear: both;
+}
+
+.div-table-col-fixed-width {
+	width: 30px;
+}
+
+.div-table-col {
+	float: left; /*fix for  buggy browsers*/
+	display: table-column;
+	margin-bottom: 22px;
+	margin-right: 4px;
 }

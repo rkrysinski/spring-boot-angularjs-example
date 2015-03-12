@@ -18,6 +18,6 @@ public interface ItemRepository extends CrudRepository<Item, Long> {
 	
 	@Override
 	@Lock(LockModeType.OPTIMISTIC)
-	<S extends Item> Iterable<S> save(Iterable<S> items);
+	<S extends Item> List<S> save(Iterable<S> items);
 	
 }

@@ -2,5 +2,6 @@
 
 angular.module('shop', [
 	'shop.controllers',
-	'shop.services'
+	'shop.services',
+	'shop.filters'
 ]);

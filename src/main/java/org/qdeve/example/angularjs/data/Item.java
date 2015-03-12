@@ -41,6 +41,26 @@ public class Item {
 	public void setCount(int count) {
 		this.count = count;
 	}
+	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	public void buy(int toBuy) {
+		this.count -= toBuy;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -80,8 +100,8 @@ public class Item {
 	@Override
 	public String toString() {
 		return String.format(Locale.ENGLISH, 
-				"Item [itemName=%s, count=%d]",
-				name, count);
+				"Item [itemName=%s, count=%d, id=%d, version=%d]",
+				name, count, id, version);
 	}
 
 	public static class Builder {
@@ -102,5 +122,4 @@ public class Item {
 			return new Item(name, count);
 		}
 	}
-
 }
