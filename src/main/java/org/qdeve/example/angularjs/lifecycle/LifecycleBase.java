@@ -2,6 +2,9 @@ package org.qdeve.example.angularjs.lifecycle;
 
 import org.springframework.context.SmartLifecycle;
 
+/**
+ * Abstract class that implements SmartLifecycle boiler plate for.
+ */
 abstract public class LifecycleBase implements SmartLifecycle {
 
 	private static final int INITIALIZATION_MOMENT = 0;

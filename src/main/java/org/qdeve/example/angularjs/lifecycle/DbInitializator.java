@@ -11,6 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+/**
+ * This Bean initialize the database with example data. By default it's 
+ * enabled, however on production it can be turned off from 
+ * application.properties by setting 'acme.initializers.db' to false.
+ */
 @Component
 public class DbInitializator extends LifecycleBase {
 
@@ -19,7 +24,7 @@ public class DbInitializator extends LifecycleBase {
 	@Autowired
 	private ItemRepository itemDAO;
 	
-	@Value("${acme.lifecycle.dbinit}") 
+	@Value("${acme.initializers.db}") 
 	Boolean dbInit;
 
 	@Override
