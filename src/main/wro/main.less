@@ -1,9 +1,12 @@
+@normal-size: 20px;
+@xl-size: 40px;
+
 input {
 	width: 50px;
 }
 
-ul {
-	margin: 0;
+ul, label {
+	margin: 2px 0 0 0;
 }
 
 #header {
@@ -39,25 +42,25 @@ ul {
 }
 
 .padding-bottom-normal {
-	padding-bottom: 20px;
+	padding-bottom: @normal-size;
 }
 
 .margin-top-normal {
-	margin-top: 20px;
+	margin-top: @normal-size;
 }
 .margin-top-xl {
-	margin-top: 40px;
-}
-.margin-left-xl {
-	margin-left: 40px;
+	margin-top: @xl-size;
 }
 .margin-left-mormal {
-	margin-left: 20px;
+	margin-left: @normal-size;
+}
+.margin-left-xl {
+	margin-left: @xl-size;
 }
 
 .div-table {
 	display: table;
-	margin-left: 20px;
+	margin-left: @normal-size;
 	width: auto;
 }
 
@@ -68,7 +71,7 @@ ul {
 }
 
 .div-table-col-fixed-width {
-	width: 30px;
+	width: @normal-size;
 }
 
 .div-table-col {
