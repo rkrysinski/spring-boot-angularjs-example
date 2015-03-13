@@ -7,7 +7,6 @@ import org.qdeve.example.angularjs.data.Item;
 import org.qdeve.example.angularjs.repo.ItemManager;
 import org.qdeve.example.angularjs.repo.SaveStatus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,10 +35,7 @@ public class ItemController {
 		
 		Map<SaveStatus, List<Item>> updateResult = itemMgr.updateItemsInDB(items);
 		
-		return new ResponseEntity<>(
-				ResponseMessage.fromResult(updateResult), 
-				HttpStatus.OK
-		);
+		return ResponseEntity.ok(ResponseMessage.fromResult(updateResult));
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -47,6 +43,6 @@ public class ItemController {
 
 		List<Item> items = itemMgr.getAll();
 		
-		return new ResponseEntity<>(items, HttpStatus.OK);
+		return ResponseEntity.ok(items);
 	}
 }

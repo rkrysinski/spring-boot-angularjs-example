@@ -6,6 +6,9 @@ import java.util.Map;
 import org.qdeve.example.angularjs.data.Item;
 import org.qdeve.example.angularjs.repo.SaveStatus;
 
+/**
+ * Class that encapsulates the response to the browser.
+ */
 public class ResponseMessage {
 
 	private Map<SaveStatus, List<Item>> updateStatus;
