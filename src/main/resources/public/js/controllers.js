@@ -23,6 +23,7 @@ shopCtrl.controller('ItemListCtrl', [ '$scope', 'Item', function($scope, Item) {
 		.then(function(data) {
 				$scope.updateStatus = data.updateStatus;
 			}, function(error) {
+				restoreCountFor(items);
 				$scope.error = error;
 			}
 		).finally(function(data) {
@@ -34,6 +35,7 @@ shopCtrl.controller('ItemListCtrl', [ '$scope', 'Item', function($scope, Item) {
 		Item.query().$promise.then(function(data) {
 			data.forEach(function(data) {
 				data.toBuy = "";
+				data.originalCount = data.count;
 			});
 			$scope.items = data;
 		}, function(error) {
@@ -47,6 +49,12 @@ shopCtrl.controller('ItemListCtrl', [ '$scope', 'Item', function($scope, Item) {
 			itemsToBuy += item.toBuy;
 		});
 		return itemsToBuy == 0;
+	}
+	
+	function restoreCountFor(items) {
+		items.forEach(function(item) {
+			item.count = item.originalCount;
+		});
 	}
 	
 	function clearMessages($scope) {
