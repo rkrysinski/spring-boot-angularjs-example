@@ -8,7 +8,6 @@ services.factory('Item', [ '$resource', function($resource) {
 		},
 		update: {
 			method: 'PUT',
-			isArray : true,
 		}
 	});
 } ]);

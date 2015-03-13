@@ -7,13 +7,16 @@ import java.util.stream.Collectors;
 import org.qdeve.example.angularjs.RetryConfig;
 import org.qdeve.example.angularjs.data.Item;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Component;
 
+/**
+ *	Layer between UI and DB. 
+ */
 @Component
 public class ItemManager {
-
+	
 	@Autowired
 	private ItemRepository itemDAO;
 	@Autowired
@@ -23,43 +26,52 @@ public class ItemManager {
 		return itemDAO.findAll();
 	}
 
-	public List<Item> update(List<Item> items) {
+	public Map<SaveStatus, List<Item>> updateItemsInDB(List<Item> items) {
 		
-		Map<Boolean, List<Item>> boughtAndNot = items.parallelStream().collect(
-			Collectors.partitioningBy(
-				(item) -> saveToDB(item)
+		Map<SaveStatus, List<Item>> boughtAndNot = items.stream()
+			.filter( 
+				(item) -> item.getCount() > 0
+			)
+			.collect(Collectors.groupingBy(
+				(item) -> updateItemInDB(item)
 			)
 		);
-		List<Item> notUpdated = boughtAndNot.get(Boolean.FALSE);
-		if (!notUpdated.isEmpty()) {
-			throw new DataIntegrityViolationException(
-				String.format("Failed to buy the following item(s): \"%s\". " +
-						"It's very likely that we are out for the particular item(s). Please try again.", 
-						 notUpdated.stream()
-						 	.map(Item::getName)
-						    .collect(Collectors.joining(",")))
-				);
-		}
-
-		return itemDAO.findAll();
+		return boughtAndNot;
 		
 	}
 
-	private boolean saveToDB(Item item) {
+	private SaveStatus updateItemInDB(Item item) {
 		
-		RetryTemplate template = retryConfig.createRetryTemplate();
+		SaveStatus operationStatus;
+		
+		try {
+			operationStatus = doUpdateItemInDB(item);
+		} catch (ObjectOptimisticLockingFailureException e) {
+			operationStatus = SaveStatus.ERROR;
+		}
+		
+		return operationStatus;
+	}
 
+	/**
+	 * Save item in DB and retry in case of OptimisticLock exception. 
+	 * @param item to save in DB
+	 * @return status of save operation.
+	 */
+	private SaveStatus doUpdateItemInDB(Item item) {
+		RetryTemplate template = retryConfig.createRetryOnOptimisticLockTemplate();
+		
 		return template.execute(
 			(context) -> { 
-				boolean isSaved = false;
+				SaveStatus status = SaveStatus.NOT_ENOUGH_ITEMS;
 				Item dbItem = itemDAO.findOne(item.getId());
 				// do we have enough items to sell?
 				if (dbItem.getCount() >= item.getCount()) {
 					dbItem.buy(item.getCount());
 					itemDAO.save(dbItem);
-					isSaved = true;
+					status = SaveStatus.SUCCESS;
 				}
-				return isSaved;
+				return status;
 			}
 		);
 	}

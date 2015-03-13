@@ -1,9 +1,11 @@
-package org.qdeve.example.angularjs.controllers;
+package org.qdeve.example.angularjs.rest;
 
 import java.util.List;
+import java.util.Map;
 
 import org.qdeve.example.angularjs.data.Item;
 import org.qdeve.example.angularjs.repo.ItemManager;
+import org.qdeve.example.angularjs.repo.SaveStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,18 +23,27 @@ public class ItemController {
 	@Autowired
 	private ItemManager itemMgr;
 
+	/**
+	 * Retrieves items from UI and pushes it to DB.
+	 * 
+	 * NOTE: Item.count coming from UI contains the number of items to buy.
+	 * 
+	 * @param items coming from UI
+	 * @return the ResponseMessage.
+	 */
 	@RequestMapping(method = RequestMethod.PUT)
-	ResponseEntity<List<Item>> update(@RequestBody List<Item> items) {
+	ResponseEntity<ResponseMessage> updateItems(@RequestBody List<Item> items) {
 		
-		//TODO: change return value to have string with status of order
-		//      make the message coming from properties file (EN).
-		List<Item> updatedItems = itemMgr.update(items);
+		Map<SaveStatus, List<Item>> updateResult = itemMgr.updateItemsInDB(items);
 		
-		return new ResponseEntity<>(updatedItems, HttpStatus.OK);
+		return new ResponseEntity<>(
+				ResponseMessage.fromResult(updateResult), 
+				HttpStatus.OK
+		);
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	ResponseEntity<List<Item>> getAll() {
+	ResponseEntity<List<Item>> getAllItems() {
 
 		List<Item> items = itemMgr.getAll();
 		

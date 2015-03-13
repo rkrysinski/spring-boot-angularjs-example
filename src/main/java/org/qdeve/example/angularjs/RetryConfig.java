@@ -19,10 +19,10 @@ public class RetryConfig {
 	@Value("${acme.retry.db.count}")
 	private int maxAttempts = 3;
 
-	public RetryTemplate createRetryTemplate() {
+	public RetryTemplate createRetryOnOptimisticLockTemplate() {
 		return createRetryTemplate(ObjectOptimisticLockingFailureException.class);
 	}
-	
+
 	public RetryTemplate createRetryTemplate(Class<? extends Throwable> ex) {
 		Map<Class<? extends Throwable>, Boolean> exceptions = new HashMap<>();
 		exceptions.put(ex, true);

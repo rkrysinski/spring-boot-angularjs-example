@@ -1,11 +1,34 @@
 'use strict';
 
-/* Controllers */
-
-var shopCtrl = angular.module('shop.controllers', []);
-
+var shopCtrl = angular.module('shop.controllers');
 
 shopCtrl.controller('ItemListCtrl', [ '$scope', 'Item', function($scope, Item) {
+	
+	clearMessages($scope);
+	
+	setUpItems($scope);
+	
+	$scope.buy = function(items) {
+		clearMessages($scope);
+		
+		if (nothingToBuy(items)) {
+			return;
+		}
+		
+		items.forEach(function(item) {
+			item.count = item.toBuy;
+		});	
+		
+		Item.update(items).$promise
+		.then(function(data) {
+				$scope.updateStatus = data.updateStatus;
+			}, function(error) {
+				$scope.error = error;
+			}
+		).finally(function(data) {
+			setUpItems($scope);
+		});
+	};
 	
 	function setUpItems($scope) {
 		Item.query().$promise.then(function(data) {
@@ -18,46 +41,17 @@ shopCtrl.controller('ItemListCtrl', [ '$scope', 'Item', function($scope, Item) {
 		});	
 	}
 	
-	$scope.error = "";
-	$scope.message = "";
-
-	setUpItems($scope);
-	
-	$scope.buy = function(items) {
+	function nothingToBuy(items) {
+		var itemsToBuy = 0
 		items.forEach(function(item) {
-			item.count = item.toBuy;
-		});		
-		Item.update(items).$promise
-		.then(function(data) {
-				$scope.message = "You have ordered items successfully.";
-				$scope.error = "";
-			}, function(error) {
-				$scope.message = "";
-				$scope.error = error;
-			}
-		).finally(function(data) {
-			setUpItems($scope);
+			itemsToBuy += item.toBuy;
 		});
-	};
+		return itemsToBuy == 0;
+	}
+	
+	function clearMessages($scope) {
+		$scope.error = "";
+		$scope.updateStatus = "";
+	}
+		
 } ]);
-
-shopCtrl.directive("statusSection", function() {
-	return {
-		restrict : 'E',
-		templateUrl : "includes/status-section.html"
-	};
-});
-
-shopCtrl.directive("buySection", function() {
-	return {
-		restrict : 'E',
-		templateUrl : "includes/buy-section.html"
-	};
-});
-
-shopCtrl.directive("header", function() {
-	return {
-		restrict : 'E',
-		templateUrl : "includes/header.html"
-	};
-});
