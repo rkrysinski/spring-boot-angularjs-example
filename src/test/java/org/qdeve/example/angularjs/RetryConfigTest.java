@@ -1,13 +1,19 @@
 package org.qdeve.example.angularjs;
 
-import static org.junit.Assert.fail;
-import org.mockito.Matchers;
+import static com.googlecode.catchexception.CatchException.catchException;
+import static com.googlecode.catchexception.CatchException.caughtException;
+import static org.hamcrest.CoreMatchers.isA;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.qdeve.example.angularjs.data.Item;
 import org.qdeve.example.angularjs.repo.ItemRepository;
@@ -36,26 +42,45 @@ public class RetryConfigTest {
 		MockitoAnnotations.initMocks(this);
 	}
 
+	@Test
 	@SuppressWarnings("unchecked")
-	@Test(expected = ObjectOptimisticLockingFailureException.class)
-	public void exceedRetryDbCountOnOptimisticLockingException() {
+	public void shouldThrowExceptionWhenRetryingOnExceptionAllTheTime() {
 		// Given
-		RetryTemplate template = retryConfig
-				.createRetryOnOptimisticLockTemplate();
+		given(itemDAO.findAll())
+			.willThrow(ObjectOptimisticLockingFailureException.class);
 
 		// When
-		Mockito
-			.when(itemDAO.save(Matchers.anyListOf(Item.class)))
-			.thenThrow(ObjectOptimisticLockingFailureException.class);
+		RetryTemplate template = retryConfig.createRetryOnOptimisticLockTemplate();
+		catchException(template)
+			.execute((context) -> {
+					return itemDAO.findAll();
+			});
+
+		// Then
+		assertThat(caughtException(), isA(ObjectOptimisticLockingFailureException.class));		
+		verify(itemDAO, times(maxAttempts)).findAll();
+	}
+	
+	@Test
+	@SuppressWarnings("unchecked")
+	public void shouldReturnItemWhenRetryingOneTime() {
+		// Given
+		Item dbItem = new Item.Builder().withDefaultValues().build();
+		given(itemDAO.findOne(anyLong()))
+			.willThrow(ObjectOptimisticLockingFailureException.class)
+			.willReturn(dbItem);
+		
+		// When
+		RetryTemplate template = retryConfig.createRetryOnOptimisticLockTemplate();
+		Item retrievedItem = template.execute(
+			(context) -> {
+				return itemDAO.findOne(anyLong());
+			}
+		);
 		
 		// Then
-		template.execute((context) -> {
-			return itemDAO.save(Matchers.anyListOf(Item.class));
-		});
-
-		Mockito.verify(itemDAO, Mockito.times(maxAttempts));
-		fail("RetryTemplate should throw an exception when retried operation fails more than "
-				+ maxAttempts + " times");
+		assertThat(retrievedItem, equalTo(dbItem));
+		verify(itemDAO, times(2)).findOne(anyLong());
 	}
 
 }

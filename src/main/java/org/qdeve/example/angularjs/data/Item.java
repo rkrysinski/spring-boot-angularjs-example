@@ -26,6 +26,12 @@ public class Item {
 		this.count = count;
 	}
 
+	public Item(String name, int count, long id) {
+		this.name = name;
+		this.count = count;
+		this.id = id;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -76,7 +82,8 @@ public class Item {
 
 		Item other = (Item) obj;
 
-		if (name != null && !name.endsWith(other.name)) {
+		if (name != null && !name.equals(other.name) 
+				|| name == null && other.name != null) {
 			return false;
 		}
 
@@ -100,13 +107,14 @@ public class Item {
 	@Override
 	public String toString() {
 		return String.format(Locale.ENGLISH, 
-				"Item [itemName=%s, count=%d, id=%d, version=%d]",
+				"Item [name=%s, count=%d, id=%d, version=%d]",
 				name, count, id, version);
 	}
 
 	public static class Builder {
 		String name;
 		int count;
+		long id;
 
 		public Builder withName(String name) {
 			this.name = name;
@@ -119,7 +127,22 @@ public class Item {
 		}
 
 		public Item build() {
-			return new Item(name, count);
+			return new Item(name, count, id);
+		}
+
+		public Builder withDefaultValues() {
+			this.count = 3;
+			this.name = "Ferrari";
+			return this;
+		}
+
+		public Builder withId(long id) {
+			this.id = id;
+			return this;
 		}
 	}
+
+    public static Item anyItem() {
+        return new Item.Builder().withCount(100).withName("anyItem").build();
+    }
 }

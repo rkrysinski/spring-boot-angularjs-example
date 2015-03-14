@@ -30,8 +30,8 @@ public class ItemController {
 	 * @param items coming from UI
 	 * @return the ResponseMessage.
 	 */
-	@RequestMapping(method = RequestMethod.PUT)
-	ResponseEntity<ResponseMessage> updateItems(@RequestBody List<Item> items) {
+	@RequestMapping(method = RequestMethod.PUT, consumes = "application/json")
+	ResponseEntity<ResponseMessage> updateItems(@RequestBody List<Item> items ) {
 		
 		Map<SaveStatus, List<Item>> updateResult = itemMgr.updateItemsInDB(items);
 		
