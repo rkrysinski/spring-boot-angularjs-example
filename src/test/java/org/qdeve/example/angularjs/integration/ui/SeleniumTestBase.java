@@ -2,17 +2,23 @@ package org.qdeve.example.angularjs.integration.ui;
 
 import java.net.URI;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.qdeve.example.angularjs.AcmeApplication;
 import org.qdeve.example.angularjs.data.Item;
 import org.qdeve.example.angularjs.repo.ItemRepository;
+import org.seleniumhq.selenium.fluent.FluentBy;
+import org.seleniumhq.selenium.fluent.FluentWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
@@ -21,10 +27,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 /**
- * Base class for Selenium WebDrive based Web UI testing.
+ * Base class for Selenium WebDrive based UI testing.
  * <p>
- * Provides start up of integration server, set up of a web driver and it's
- * cleanup. It also provisions test item into DB at startup time.
+ * Provides start up of integration server, set up a web driver and handle it's
+ * cleanup. It also provisions Item under test, and utilities.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = AcmeApplication.class)
@@ -32,7 +38,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @IntegrationTest({ "server.port=0" })
 public class SeleniumTestBase {
 
-	public static final long DEFAULT_WAIT_TIME_SECONDS = 5;
+	private static final long DEFAULT_WAIT_TIME_SECONDS = 10L;
+	private static final long DEFAULT_EXPLICIT_WAIT_TIME_SECONDS = 5L;
 
 	@Value("${local.server.port}")
 	private int port;
@@ -43,7 +50,7 @@ public class SeleniumTestBase {
 	protected URI baseURL;
 	protected Item dbItem;
 	protected WebDriver driver;
-	protected WebDriverWait wait;
+	protected FluentWebDriver fwd;
 
 	@Before
 	public void setUp() throws Exception {
@@ -52,7 +59,7 @@ public class SeleniumTestBase {
 		driver = new FirefoxDriver();
 		driver.manage().timeouts()
 				.implicitlyWait(DEFAULT_WAIT_TIME_SECONDS, TimeUnit.SECONDS);
-		wait = new WebDriverWait(driver, DEFAULT_WAIT_TIME_SECONDS);
+		fwd = new FluentWebDriver(driver);
 	}
 
 	@After
@@ -65,5 +72,30 @@ public class SeleniumTestBase {
 		itemDAO.deleteAll();
 		dbItem = itemDAO.save(Arrays.asList(dbItem)).get(0);
 	}
+	
+	/**
+	 * Hooks into Angular's internals, and block until requests have completed.
+	 */
+	public static By ngWait(final By by) {
+	    return new FluentBy() {
+	        @Override
+	        public void beforeFindElement(WebDriver driver) {
+	            driver.manage().timeouts().setScriptTimeout(DEFAULT_EXPLICIT_WAIT_TIME_SECONDS, TimeUnit.SECONDS);
+	            ((JavascriptExecutor) driver).executeAsyncScript("var callback = arguments[arguments.length - 1];" +
+	                "angular.element(document.body).injector().get('$browser').notifyWhenNoOutstandingRequests(callback);");
+	            super.beforeFindElement(driver);
+	        }
+
+	        @Override
+	        public List<WebElement> findElements(SearchContext context) {
+	            return by.findElements(context);
+	        }
+
+	        @Override
+	        public WebElement findElement(SearchContext context) {
+	            return by.findElement(context);
+	        }
+	    };
+	}	
 
 }
