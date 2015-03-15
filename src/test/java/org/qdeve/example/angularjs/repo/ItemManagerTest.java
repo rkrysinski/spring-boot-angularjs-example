@@ -7,7 +7,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.eq;
-import static org.qdeve.example.angularjs.data.Item.anyItem;
+import static org.qdeve.example.angularjs.data.ItemUtils.anyItem;
 
 import java.util.Arrays;
 import java.util.List;

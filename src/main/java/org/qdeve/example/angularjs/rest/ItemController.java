@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(ItemController.REQUEST_MAPPING)
 public class ItemController {
 
-	public static final String REQUEST_MAPPING = "/item";
+	public static final String REQUEST_MAPPING = "/items";
 	
 	@Autowired
 	private ItemManager itemMgr;

@@ -31,6 +31,13 @@ public class Item {
 		this.count = count;
 		this.id = id;
 	}
+	
+	public Item(String name, int count, long id, Integer version) {
+		this.name = name;
+		this.count = count;
+		this.id = id;
+		this.version = version;
+	}
 
 	public String getName() {
 		return name;
@@ -115,6 +122,7 @@ public class Item {
 		String name;
 		int count;
 		long id;
+		Integer version;
 
 		public Builder withName(String name) {
 			this.name = name;
@@ -127,12 +135,12 @@ public class Item {
 		}
 
 		public Item build() {
-			return new Item(name, count, id);
+			return new Item(name, count, id, version);
 		}
 
 		public Builder withDefaultValues() {
 			this.count = 3;
-			this.name = "Ferrari";
+			this.name  = "Ferrari";
 			return this;
 		}
 
@@ -140,9 +148,18 @@ public class Item {
 			this.id = id;
 			return this;
 		}
-	}
+		
+		public Builder withVersion(Integer version) {
+			this.version = version;
+			return this;
+		}
 
-    public static Item anyItem() {
-        return new Item.Builder().withCount(100).withName("anyItem").build();
-    }
+		public Builder fromItem(Item item) {
+			this.name    = item.getName();
+			this.count   = item.getCount();
+			this.id      = item.getId();
+			this.version = item.getVersion();
+			return this;
+		}
+	}
 }

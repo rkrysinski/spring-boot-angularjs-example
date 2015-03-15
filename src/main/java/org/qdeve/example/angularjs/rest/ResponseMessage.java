@@ -13,6 +13,8 @@ public class ResponseMessage {
 
 	private Map<SaveStatus, List<Item>> updateStatus;
 	
+	public ResponseMessage() {}
+	
 	public ResponseMessage(Map<SaveStatus, List<Item>> updateResult) {
 		this.updateStatus = updateResult;
 	}
