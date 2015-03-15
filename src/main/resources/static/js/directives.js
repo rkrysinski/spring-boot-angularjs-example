@@ -20,8 +20,9 @@ app.directive("itemList", function() {
 	return {
 		restrict : 'E',
 		scope: {
-			items: '=items'
-		},		
+			items: '=items',
+			kindOfOperation: '@kind'
+		},
 		templateUrl : "includes/item-list.html"
 	};
 });

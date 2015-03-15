@@ -1,6 +1,7 @@
-package org.qdeve.example.angularjs.rest;
+package org.qdeve.example.angularjs.integration.rest;
 
 import org.qdeve.example.angularjs.repo.SaveStatus;
+import org.qdeve.example.angularjs.rest.ResponseMessage;
 
 public class ResponseMessageAssertion {
 	private ResponseMessage responseMessage;

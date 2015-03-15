@@ -16,6 +16,7 @@
 				<input type="number"
 					   ng-model="item.toBuy"
 					   name="count"
+					   id="tobuy_input_count_{{$index}}"
 					   min="1" max="{{item.count}}" 
 					   ng-disabled='{{item.count == 0}}'/>
 			    <br/>
@@ -30,7 +31,7 @@
 			</div>
 			
 			<div class="div-table-col">
-				<input ng-if="$last" type="submit" value="Buy" class="margin-left-xl"/>
+				<input ng-if="$last" type="submit" value="Buy" id="buy" class="margin-left-xl"/>
 			</div>		
 		
 		</div>

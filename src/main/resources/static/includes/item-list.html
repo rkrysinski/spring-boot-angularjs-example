@@ -1,5 +1,8 @@
 <ul>
 	<li ng-repeat="item in items">
-		<span>Product name: "{{item.name}}" Count: {{item.count}}</span>
+		<span>Product name: </span>
+		<span id="{{kindOfOperation}}_result_item_name_{{$index}}">{{item.name}}</span>
+		<span>, Count:</span>
+		<span id="{{kindOfOperation}}_result_count_{{$index}}">{{item.count}}</span>
 	</li>
 </ul>

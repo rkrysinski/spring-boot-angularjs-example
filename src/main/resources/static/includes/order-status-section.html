@@ -6,18 +6,18 @@
 
 	<div  class="status-message-success margin-top-normal" ng-if="updateStatus.SUCCESS">
 		<span>You have successfully bought the following:</span>
-		<item-list items="updateStatus.SUCCESS"></item-list>
+		<item-list items="updateStatus.SUCCESS" kind="success"></item-list>
 	</div>
 	
 	<div  class="status-message-warning margin-top-normal" ng-if="updateStatus.NOT_ENOUGH_ITEMS">
 		<span>Not enough amount in our shop to buy the following:</span>
-		<item-list items="updateStatus.NOT_ENOUGH_ITEMS"></item-list>
+		<item-list items="updateStatus.NOT_ENOUGH_ITEMS" kind="not_enough"></item-list>
 		<span>Please contact our shop support to get information about availability.</span>
 	</div>
 	
 	<div  class="status-message-error margin-top-normal" ng-if="updateStatus.ERROR">
 		<span>Failed to process the following product(s):</span>
-		<item-list items="updateStatus.ERROR"></item-list>
+		<item-list items="updateStatus.ERROR" kind="error"></item-list>
 		<span>Please contact our support team if the problem persists.</span>
 	</div>
 

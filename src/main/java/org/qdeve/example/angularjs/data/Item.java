@@ -119,11 +119,14 @@ public class Item {
 	}
 
 	public static class Builder {
+		
+		public static final int DEFAULT_COUNT_20 = 20;
+		public static final String DEFAULT_NAME = "Ferrari";
 		String name;
 		int count;
 		long id;
 		Integer version;
-
+		
 		public Builder withName(String name) {
 			this.name = name;
 			return this;
@@ -139,8 +142,8 @@ public class Item {
 		}
 
 		public Builder withDefaultValues() {
-			this.count = 3;
-			this.name  = "Ferrari";
+			this.count = DEFAULT_COUNT_20;
+			this.name  = DEFAULT_NAME;
 			return this;
 		}
 
