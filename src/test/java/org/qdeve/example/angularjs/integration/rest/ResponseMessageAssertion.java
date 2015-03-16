@@ -1,5 +1,12 @@
 package org.qdeve.example.angularjs.integration.rest;
 
+import static org.hamcrest.Matchers.contains;
+import org.hamcrest.MatcherAssert;
+
+import java.util.List;
+import java.util.Map;
+
+import org.qdeve.example.angularjs.data.Item;
 import org.qdeve.example.angularjs.repo.SaveStatus;
 import org.qdeve.example.angularjs.rest.ResponseMessage;
 
@@ -12,6 +19,10 @@ public class ResponseMessageAssertion {
 	
 	public static ResponseMessageAssertion assertThat(ResponseMessage responseMessage) {
 		return new ResponseMessageAssertion(responseMessage);
+	}
+	
+	public static ResponseMessageAssertion assertThat(Map<SaveStatus, List<Item>> mapResult) {
+		return new ResponseMessageAssertion(new ResponseMessage(mapResult));
 	}
 
 	public ResponseMessageAssertion hasResponseItemsFor(SaveStatus status) {
@@ -32,12 +43,19 @@ public class ResponseMessageAssertion {
 		return this;
 	}
 
-	public ResponseMessageAssertion hasNotItemsFor(SaveStatus status) {
+	public ResponseMessageAssertion hasNoItemsFor(SaveStatus status) {
 		if (responseMessage.getUpdateStatus().get(status) != null) {
 			throw new AssertionError("Excpeting that given ResponseMessage does not contain " 
 					+ status + " items, while in provided ResponseMessage was: " 
 					+ responseMessage.getUpdateStatus().get(status) + ".");			
 		}
+		return this;
+	}
+
+	public ResponseMessageAssertion hasExatlyGivenItemsFor(SaveStatus state, List<Item> content) {
+		hasResponseItemsFor(state);
+		List<Item> stateList = responseMessage.getUpdateStatus().get(state);
+		MatcherAssert.assertThat(stateList, contains(content.toArray()));
 		return this;
 	}
 }

@@ -86,8 +86,8 @@ public class ItemControllerIntegrationTest {
 		ResponseMessageAssertion.assertThat(response.getBody())
 			.responseAndContentNotNull()
 			.hasResponseItemsFor(SaveStatus.SUCCESS)
-			.hasNotItemsFor(SaveStatus.ERROR)
-			.hasNotItemsFor(SaveStatus.NOT_ENOUGH_ITEMS);
+			.hasNoItemsFor(SaveStatus.ERROR)
+			.hasNoItemsFor(SaveStatus.NOT_ENOUGH_ITEMS);
 		Item dbItem = itemDAO.findOne(dbItemUnderTest.getId());
 		assertThat(dbItem.getCount(), equalTo(dbItemUnderTest.getCount() - 1));
 	}
@@ -109,8 +109,8 @@ public class ItemControllerIntegrationTest {
 		ResponseMessageAssertion.assertThat(response.getBody())
 			.responseAndContentNotNull()
 			.hasResponseItemsFor(SaveStatus.NOT_ENOUGH_ITEMS)
-			.hasNotItemsFor(SaveStatus.ERROR)
-			.hasNotItemsFor(SaveStatus.SUCCESS);
+			.hasNoItemsFor(SaveStatus.ERROR)
+			.hasNoItemsFor(SaveStatus.SUCCESS);
 		Item dbItem = itemDAO.findOne(dbItemUnderTest.getId());
 		assertThat(dbItem.getCount(), equalTo(dbItemUnderTest.getCount()));
 	}
@@ -137,8 +137,8 @@ public class ItemControllerIntegrationTest {
 		ResponseMessageAssertion.assertThat(response.getBody())
 			.responseAndContentNotNull()
 			.hasResponseItemsFor(SaveStatus.SUCCESS)
-			.hasNotItemsFor(SaveStatus.ERROR)
-			.hasNotItemsFor(SaveStatus.NOT_ENOUGH_ITEMS);
+			.hasNoItemsFor(SaveStatus.ERROR)
+			.hasNoItemsFor(SaveStatus.NOT_ENOUGH_ITEMS);
 		Item dbItem = itemDAO.findOne(dbItemUnderTest.getId());
 		assertThat(dbItem.getCount(), equalTo(dbItemUnderTest.getCount() - 2));
 	}

@@ -21,7 +21,6 @@ public class BuyItemUITest extends SeleniumTestBase {
 	public void shouldBuyItemsWhenInStock()
 	{
 		// given
-		driver.get(baseURL.toString());
 		fwd.input(id("tobuy_input_count_0")).sendKeys("1");
 		
 		//when
@@ -39,7 +38,6 @@ public class BuyItemUITest extends SeleniumTestBase {
 	public void shouldNotBuyItemsWhenOutOfStock()
 	{
 		// given
-		driver.get(baseURL.toString());
 		fwd.input(id("tobuy_input_count_0")).sendKeys("1");
 
 		//when: update in between before clicking buy button

@@ -1,8 +1,5 @@
 package org.qdeve.example.angularjs.repo;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
@@ -21,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.qdeve.example.angularjs.AcmeApplication;
 import org.qdeve.example.angularjs.data.Item;
+import org.qdeve.example.angularjs.integration.rest.ResponseMessageAssertion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
@@ -53,13 +51,12 @@ public class ItemManagerTest {
 		
 		// When
 		Map<SaveStatus, List<Item>> updateResult = itemMgr.updateItemsInDB(Arrays.asList(uiItem));
-		List<Item> successList = updateResult.get(SaveStatus.SUCCESS);
 		
 		// Then
-		assertThat(updateResult.get(SaveStatus.ERROR), equalTo(null));
-		assertThat(updateResult.get(SaveStatus.NOT_ENOUGH_ITEMS), equalTo(null));
-		assertThat(successList, hasSize(1));
-		assertThat(successList.get(0), equalTo(uiItem));
+		ResponseMessageAssertion.assertThat(updateResult)
+			.hasNoItemsFor(SaveStatus.ERROR)
+			.hasNoItemsFor(SaveStatus.NOT_ENOUGH_ITEMS)
+			.hasExatlyGivenItemsFor(SaveStatus.SUCCESS, Arrays.asList(uiItem));
 	}
 	
 	@Test
@@ -71,13 +68,12 @@ public class ItemManagerTest {
 		
 		// When
 		Map<SaveStatus, List<Item>> updateResult = itemMgr.updateItemsInDB(Arrays.asList(uiItem));
-		List<Item> notEnoughItemsList = updateResult.get(SaveStatus.NOT_ENOUGH_ITEMS);
 		
 		// Then
-		assertThat(updateResult.get(SaveStatus.ERROR), equalTo(null));
-		assertThat(updateResult.get(SaveStatus.SUCCESS), equalTo(null));
-		assertThat(notEnoughItemsList, hasSize(1));
-		assertThat(notEnoughItemsList.get(0), equalTo(uiItem));
+		ResponseMessageAssertion.assertThat(updateResult)
+			.hasNoItemsFor(SaveStatus.ERROR)
+			.hasNoItemsFor(SaveStatus.SUCCESS)
+			.hasExatlyGivenItemsFor(SaveStatus.NOT_ENOUGH_ITEMS, Arrays.asList(uiItem));		
 	}
 	
 	@Test
@@ -92,13 +88,12 @@ public class ItemManagerTest {
 		
 		// When
 		Map<SaveStatus, List<Item>> updateResult = itemMgr.updateItemsInDB(Arrays.asList(uiItem));
-		List<Item> errorItemsList = updateResult.get(SaveStatus.ERROR);
 
 		// Then
-		assertThat(updateResult.get(SaveStatus.NOT_ENOUGH_ITEMS), equalTo(null));
-		assertThat(updateResult.get(SaveStatus.SUCCESS), equalTo(null));
-		assertThat(errorItemsList, hasSize(1));
-		assertThat(errorItemsList.get(0), equalTo(uiItem));
+		ResponseMessageAssertion.assertThat(updateResult)
+			.hasNoItemsFor(SaveStatus.NOT_ENOUGH_ITEMS)
+			.hasNoItemsFor(SaveStatus.SUCCESS)
+			.hasExatlyGivenItemsFor(SaveStatus.ERROR, Arrays.asList(uiItem));		
 	}
 	
 	@Test
@@ -110,9 +105,10 @@ public class ItemManagerTest {
 		Map<SaveStatus, List<Item>> updateResult = itemMgr.updateItemsInDB(Arrays.asList(uiItem));
 
 		// Then
-		assertThat(updateResult.get(SaveStatus.ERROR), equalTo(null));
-		assertThat(updateResult.get(SaveStatus.SUCCESS), equalTo(null));
-		assertThat(updateResult.get(SaveStatus.NOT_ENOUGH_ITEMS), equalTo(null));
+		ResponseMessageAssertion.assertThat(updateResult)
+			.hasNoItemsFor(SaveStatus.ERROR)
+			.hasNoItemsFor(SaveStatus.SUCCESS)
+			.hasNoItemsFor(SaveStatus.NOT_ENOUGH_ITEMS);
 	}
 
 }

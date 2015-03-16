@@ -29,8 +29,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 /**
  * Base class for Selenium WebDrive based UI testing.
  * <p>
- * Provides start up of integration server, set up a web driver and handle it's
- * cleanup. It also provisions Item under test, and utilities.
+ * Provides start up of integration server, set up a web driver, opens the browser
+ * and handle it's cleanup. It also provisions Item under test, and utilities.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = AcmeApplication.class)
@@ -60,6 +60,7 @@ public class SeleniumTestBase {
 		driver.manage().timeouts()
 				.implicitlyWait(DEFAULT_WAIT_TIME_SECONDS, TimeUnit.SECONDS);
 		fwd = new FluentWebDriver(driver);
+		driver.get(baseURL.toString());
 	}
 
 	@After
