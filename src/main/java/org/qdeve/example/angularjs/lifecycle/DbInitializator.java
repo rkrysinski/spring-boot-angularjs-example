@@ -8,7 +8,7 @@ import org.qdeve.example.angularjs.repo.ItemRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
  * application.properties by setting 'acme.initializers.db' to false.
  */
 @Component
+@ConditionalOnProperty(name="acme.initializers.db")
 public class DbInitializator extends LifecycleBase {
 
 	private static final Logger LOG = LoggerFactory.getLogger(DbInitializator.class);
@@ -24,25 +25,16 @@ public class DbInitializator extends LifecycleBase {
 	@Autowired
 	private ItemRepository itemDAO;
 	
-	@Value("${acme.initializers.db}") 
-	Boolean dbInit;
-
 	@Override
 	public void start() {
-		
-		if (dbInit) {
-			LOG.debug("Starting initialization of DB. ");
-			List<Item> items = new ArrayList<>();
-			items.add(new Item.Builder().withName("Item A").withCount(20).build());
-			items.add(new Item.Builder().withName("Item B").withCount(10).build());
-			items.add(new Item.Builder().withName("Item C").withCount(50).build());
-			itemDAO.deleteAll();
-			itemDAO.save(items);
-			LOG.debug("Initialization completed.");
-		} else {
-			LOG.debug("Skipping initialization of DB.");
-		}
-
+		LOG.debug("Starting initialization of DB. ");
+		List<Item> items = new ArrayList<>();
+		items.add(new Item.Builder().withName("Item A").withCount(20).build());
+		items.add(new Item.Builder().withName("Item B").withCount(10).build());
+		items.add(new Item.Builder().withName("Item C").withCount(50).build());
+		itemDAO.deleteAll();
+		itemDAO.save(items);
+		LOG.debug("Initialization completed.");
 		super.start();
 	}
 }

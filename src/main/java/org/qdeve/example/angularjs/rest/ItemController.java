@@ -38,7 +38,7 @@ public class ItemController {
 		return ResponseEntity.ok(ResponseMessage.fromResult(updateResult));
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
 	ResponseEntity<List<Item>> getAllItems() {
 
 		List<Item> items = itemMgr.getAll();
