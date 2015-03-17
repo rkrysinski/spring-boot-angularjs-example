@@ -1,10 +1,10 @@
-package org.qdeve.example.angularjs.rest;
+package org.qdeve.example.angularjs.controller;
 
 import java.util.List;
 import java.util.Map;
 
-import org.qdeve.example.angularjs.data.Item;
-import org.qdeve.example.angularjs.repo.SaveStatus;
+import org.qdeve.example.angularjs.dao.SaveStatus;
+import org.qdeve.example.angularjs.model.Item;
 
 /**
  * Class that encapsulates the response to the browser.

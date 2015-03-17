@@ -15,8 +15,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.qdeve.example.angularjs.AcmeApplication;
-import org.qdeve.example.angularjs.data.Item;
-import org.qdeve.example.angularjs.repo.ItemRepository;
+import org.qdeve.example.angularjs.dao.ItemRepository;
+import org.qdeve.example.angularjs.model.Item;
 import org.seleniumhq.selenium.fluent.FluentBy;
 import org.seleniumhq.selenium.fluent.FluentWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
  * Base class for Selenium WebDrive based UI testing.
  * <p>
  * Provides start up of integration server, set up a web driver, opens the browser
- * and handle it's cleanup. It also provisions Item under test, and has utilities.
+ * and handle it's cleanup. It also provisions Item under test, and utilities.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = AcmeApplication.class)

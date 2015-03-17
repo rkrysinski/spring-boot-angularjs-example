@@ -1,18 +1,18 @@
-package org.qdeve.example.angularjs.repo;
+package org.qdeve.example.angularjs.dao;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.qdeve.example.angularjs.RetryConfig;
-import org.qdeve.example.angularjs.data.Item;
+import org.qdeve.example.angularjs.model.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Component;
 
 /**
- *	Layer between UI and DB. 
+ *	Layer between REST and DB. 
  */
 @Component
 public class ItemManager {

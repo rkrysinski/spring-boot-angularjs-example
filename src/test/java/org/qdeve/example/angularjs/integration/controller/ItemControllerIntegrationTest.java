@@ -1,4 +1,4 @@
-package org.qdeve.example.angularjs.integration.rest;
+package org.qdeve.example.angularjs.integration.controller;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
@@ -13,11 +13,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.qdeve.example.angularjs.AcmeApplication;
-import org.qdeve.example.angularjs.data.Item;
-import org.qdeve.example.angularjs.repo.ItemRepository;
-import org.qdeve.example.angularjs.repo.SaveStatus;
-import org.qdeve.example.angularjs.rest.ItemController;
-import org.qdeve.example.angularjs.rest.ResponseMessage;
+import org.qdeve.example.angularjs.controller.ItemController;
+import org.qdeve.example.angularjs.controller.ResponseMessage;
+import org.qdeve.example.angularjs.dao.ItemRepository;
+import org.qdeve.example.angularjs.dao.SaveStatus;
+import org.qdeve.example.angularjs.model.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;

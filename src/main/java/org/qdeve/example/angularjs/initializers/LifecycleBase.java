@@ -1,4 +1,4 @@
-package org.qdeve.example.angularjs.lifecycle;
+package org.qdeve.example.angularjs.initializers;
 
 import org.springframework.context.SmartLifecycle;
 

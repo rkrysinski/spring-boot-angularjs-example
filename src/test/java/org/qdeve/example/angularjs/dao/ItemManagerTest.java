@@ -1,10 +1,10 @@
-package org.qdeve.example.angularjs.repo;
+package org.qdeve.example.angularjs.dao;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.eq;
-import static org.qdeve.example.angularjs.data.ItemUtils.anyItem;
+import static org.qdeve.example.angularjs.model.ItemUtils.anyItem;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,8 +17,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.qdeve.example.angularjs.AcmeApplication;
-import org.qdeve.example.angularjs.data.Item;
-import org.qdeve.example.angularjs.integration.rest.ResponseMessageAssertion;
+import org.qdeve.example.angularjs.dao.ItemManager;
+import org.qdeve.example.angularjs.dao.ItemRepository;
+import org.qdeve.example.angularjs.dao.SaveStatus;
+import org.qdeve.example.angularjs.integration.controller.ResponseMessageAssertion;
+import org.qdeve.example.angularjs.model.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;

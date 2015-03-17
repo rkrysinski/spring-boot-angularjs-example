@@ -1,10 +1,10 @@
-package org.qdeve.example.angularjs.lifecycle;
+package org.qdeve.example.angularjs.initializers;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.qdeve.example.angularjs.data.Item;
-import org.qdeve.example.angularjs.repo.ItemRepository;
+import org.qdeve.example.angularjs.dao.ItemRepository;
+import org.qdeve.example.angularjs.model.Item;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

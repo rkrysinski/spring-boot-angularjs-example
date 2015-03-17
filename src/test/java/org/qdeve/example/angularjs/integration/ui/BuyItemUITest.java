@@ -5,8 +5,8 @@ import static org.openqa.selenium.By.id;
 import java.util.Arrays;
 
 import org.junit.Test;
-import org.qdeve.example.angularjs.data.Item;
-import org.qdeve.example.angularjs.repo.ItemManager;
+import org.qdeve.example.angularjs.dao.ItemManager;
+import org.qdeve.example.angularjs.model.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**

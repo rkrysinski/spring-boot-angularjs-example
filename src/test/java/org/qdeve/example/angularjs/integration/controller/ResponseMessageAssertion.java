@@ -1,14 +1,15 @@
-package org.qdeve.example.angularjs.integration.rest;
+package org.qdeve.example.angularjs.integration.controller;
 
 import static org.hamcrest.Matchers.contains;
+
 import org.hamcrest.MatcherAssert;
 
 import java.util.List;
 import java.util.Map;
 
-import org.qdeve.example.angularjs.data.Item;
-import org.qdeve.example.angularjs.repo.SaveStatus;
-import org.qdeve.example.angularjs.rest.ResponseMessage;
+import org.qdeve.example.angularjs.controller.ResponseMessage;
+import org.qdeve.example.angularjs.dao.SaveStatus;
+import org.qdeve.example.angularjs.model.Item;
 
 public class ResponseMessageAssertion {
 	private ResponseMessage responseMessage;

@@ -1,10 +1,10 @@
-package org.qdeve.example.angularjs.repo;
+package org.qdeve.example.angularjs.dao;
 
 import java.util.List;
 
 import javax.persistence.LockModeType;
 
-import org.qdeve.example.angularjs.data.Item;
+import org.qdeve.example.angularjs.model.Item;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

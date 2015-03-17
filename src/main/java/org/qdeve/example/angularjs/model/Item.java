@@ -1,4 +1,4 @@
-package org.qdeve.example.angularjs.data;
+package org.qdeve.example.angularjs.model;
 
 import java.util.Locale;
 

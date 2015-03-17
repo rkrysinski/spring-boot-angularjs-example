@@ -1,9 +1,10 @@
-package org.qdeve.example.angularjs.data;
+package org.qdeve.example.angularjs.model;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 import org.junit.Test;
+import org.qdeve.example.angularjs.model.Item;
 
 public class ItemTest {
 

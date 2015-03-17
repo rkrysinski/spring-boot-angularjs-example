@@ -1,6 +1,6 @@
-package org.qdeve.example.angularjs.data;
+package org.qdeve.example.angularjs.model;
 
-import org.qdeve.example.angularjs.data.Item;
+import org.qdeve.example.angularjs.model.Item;
 
 public class ItemUtils {
     public static Item anyItem() {

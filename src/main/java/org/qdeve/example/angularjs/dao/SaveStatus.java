@@ -1,4 +1,4 @@
-package org.qdeve.example.angularjs.repo;
+package org.qdeve.example.angularjs.dao;
 
 public enum SaveStatus {
 	SUCCESS, 
