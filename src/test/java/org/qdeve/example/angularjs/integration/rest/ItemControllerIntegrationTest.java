@@ -58,7 +58,7 @@ public class ItemControllerIntegrationTest {
 	}
 	
 	@Test
-	public void shouldReturnAllItemsFromDBWhenAccessingItemURL() {
+	public void shouldReturnAllItemsFromDBWhenAccessingItemsURL() {
 		// given
 		theDefaultItemsInDB();
 		
@@ -93,7 +93,7 @@ public class ItemControllerIntegrationTest {
 	}
 	
 	@Test
-	public void shouldNotBuyItemsWhenNotEnoughItemsInShopAndReturnNotEoughItemsStatus() {
+	public void shouldNotBuyItemsWhenNotAvailableInShopAndReturnNotEoughStatus() {
 		// given
 		theDefaultItemsInDB();
 		Item uiItem = new Item.Builder().fromItem(dbItemUnderTest).withCount(Integer.MAX_VALUE).build();
@@ -116,7 +116,7 @@ public class ItemControllerIntegrationTest {
 	}
 	 
 	@Test
-	public void shouldBuyItemsEvenUpdateInBetween() {
+	public void shouldBuyItemsIfAvailableEvenUpdateInBetween() {
 		// given
 		theDefaultItemsInDB();
 		Item uiItem = new Item.Builder().fromItem(dbItemUnderTest).withCount(1).build();

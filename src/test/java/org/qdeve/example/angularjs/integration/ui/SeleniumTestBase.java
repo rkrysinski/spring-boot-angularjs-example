@@ -30,7 +30,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
  * Base class for Selenium WebDrive based UI testing.
  * <p>
  * Provides start up of integration server, set up a web driver, opens the browser
- * and handle it's cleanup. It also provisions Item under test, and utilities.
+ * and handle it's cleanup. It also provisions Item under test, and has utilities.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = AcmeApplication.class)
@@ -47,9 +47,9 @@ public class SeleniumTestBase {
 	@Autowired
 	private ItemRepository itemDAO;
 
+	private WebDriver driver;
 	protected URI baseURL;
 	protected Item dbItem;
-	protected WebDriver driver;
 	protected FluentWebDriver fwd;
 
 	@Before
